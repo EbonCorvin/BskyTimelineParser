@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.10.35013.160
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BskyTimelineParser", "BskyTimelineParser\BskyTimelineParser.csproj", "{D6A4E90A-6363-4C89-9044-21E6D95414D0}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestConsoleApplication", "samples\TestConsoleApplication\TestConsoleApplication.csproj", "{500F396D-1F54-4A22-A55D-B324C27F3A00}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{D6A4E90A-6363-4C89-9044-21E6D95414D0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D6A4E90A-6363-4C89-9044-21E6D95414D0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D6A4E90A-6363-4C89-9044-21E6D95414D0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D6A4E90A-6363-4C89-9044-21E6D95414D0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{500F396D-1F54-4A22-A55D-B324C27F3A00}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{500F396D-1F54-4A22-A55D-B324C27F3A00}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{500F396D-1F54-4A22-A55D-B324C27F3A00}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{500F396D-1F54-4A22-A55D-B324C27F3A00}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {6081438D-B29F-4200-A4D5-5BAE775C0E38}
+	EndGlobalSection
+EndGlobal
