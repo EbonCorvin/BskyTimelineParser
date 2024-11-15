@@ -1,4 +1,5 @@
-﻿using EbonCorvin.BskyTimelineParser.Models;
+﻿using EbonCorvin.BskyTimelineParser.BskyAPIModels;
+using EbonCorvin.BskyTimelineParser.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -106,6 +107,32 @@ namespace EbonCorvin.BskyTimelineParser
                     throw new TokenErrorException("Unable to convert the response to a Token object!");
                 }
             }
+        }
+    
+        public static async Task<BskyFeed[]> AsyncGetFeedList(BskyToken token)
+        {
+            HttpClient httpClient = new HttpClient();
+            httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token.accessJwt);
+            HttpResponseMessage response = await httpClient.GetAsync("https://oyster.us-east.host.bsky.network/xrpc/app.bsky.actor.getPreferences");
+            string json = await response.Content.ReadAsStringAsync();
+            JsonDocument doc = JsonDocument.Parse(json);
+            var preferences = doc.RootElement.GetProperty("preferences");
+            IEnumerable<string> feedUris = null;
+            foreach (var item in preferences.EnumerateArray())
+            {
+                if (item.GetProperty("$type").GetString() != "app.bsky.actor.defs#savedFeedsPref")
+                    continue;
+                feedUris = from item2 in item.GetProperty("saved").EnumerateArray()
+                             select item2.GetString();
+            }
+            string feedList = String.Join("&feeds=", feedUris);
+            Console.WriteLine(feedList);
+            response = await httpClient.GetAsync("https://oyster.us-east.host.bsky.network/xrpc/app.bsky.feed.getFeedGenerators?feeds=" + feedList);
+            json = await response.Content.ReadAsStringAsync();
+            doc = JsonDocument.Parse(json);
+            var feeds = doc.RootElement.GetProperty("feeds");
+            BskyFeed[] feedInfo = feeds.Deserialize<BskyFeed[]>();
+            return feedInfo;
         }
     }
 }

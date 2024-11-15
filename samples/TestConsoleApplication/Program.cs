@@ -1,6 +1,7 @@
 ﻿// See https://aka.ms/new-console-template for more information
 using EbonCorvin;
 using EbonCorvin.BskyTimelineParser;
+using EbonCorvin.BskyTimelineParser.BskyAPIModels;
 using EbonCorvin.BskyTimelineParser.Models;
 using System.Runtime.Intrinsics.Arm;
 
@@ -71,4 +72,14 @@ if (!istokenValid)
 }
 BskyParser parser = new BskyParser(token, TimelineTypes.Following);
 var posts = await parser.Next();
+foreach(var feed in await LoginHandler.AsyncGetFeedList(token))
+{
+    Console.WriteLine(feed.displayName);
+    Console.WriteLine(feed.uri);
+    Console.WriteLine(feed.description);
+    BskyParser parser1 = new BskyParser(token, TimelineTypes.Feed, feed.uri);
+    var feedPosts = await parser1.Next();
+    Console.WriteLine();
+}
+
 Console.Read();

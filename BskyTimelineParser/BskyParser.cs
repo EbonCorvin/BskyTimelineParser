@@ -1,4 +1,5 @@
-﻿using EbonCorvin.BskyTimelineParser.Models;
+﻿using EbonCorvin.BskyTimelineParser.BskyAPIModels;
+using EbonCorvin.BskyTimelineParser.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,7 +12,7 @@ namespace EbonCorvin.BskyTimelineParser
 {
     public enum TimelineTypes
     {
-        LikedPost, Following, Discover
+        LikedPost, Following, Feed
     }
     public class BskyParser
     {
@@ -19,13 +20,13 @@ namespace EbonCorvin.BskyTimelineParser
         {
             "https://oyster.us-east.host.bsky.network/xrpc/app.bsky.feed.getActorLikes?actor={0}&limit=30",
             "https://oyster.us-east.host.bsky.network/xrpc/app.bsky.feed.getTimeline",
-            ""
+            "https://bsky.social/xrpc/app.bsky.feed.getFeed?feed={0}"
         };
         private const string BSKY_POST_URL = "https://bsky.app/profile/{0}/post/{1}";
         private string apiEndPoint;
         private TimelineTypes timelineType = default;
         public BskyToken Token { get; set; }
-        public string UserHandle
+        public string Target
         {
             set
             {
@@ -39,11 +40,27 @@ namespace EbonCorvin.BskyTimelineParser
         /// </summary>
         /// <param name="token">A valid Bsky user token</param>
         /// <param name="timelineType">The timeline to fetch and parse.</param>
-        public BskyParser(BskyToken token, TimelineTypes timelineType)
+        /// <param name="target"><para>The person you want to grab liked post from, or the feed you want to get post from</para><para>If not supplied, the parser will grab your own liked post, or your discover feed</para></param>
+        public BskyParser(BskyToken token, TimelineTypes timelineType, string? target = "")
         {
             Token = token;
             this.timelineType = timelineType;
-            UserHandle = token.did;
+            if (timelineType == TimelineTypes.LikedPost || timelineType == TimelineTypes.Feed)
+            {
+                if (target == "" || target == null)
+                {
+                    if (timelineType == TimelineTypes.Feed)
+                        Target = "at://did:plc:z72i7hdynmk6r22z27h6tvur/app.bsky.feed.generator/whats-hot";
+                    else
+                        Target = token.did;
+                }
+                else
+                    Target = target;
+            }
+            else
+            {
+                apiEndPoint = BSKY_API_ENDPOINT[(int)timelineType];
+            }
             httpClient = new HttpClient();
             httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token.accessJwt);
         }

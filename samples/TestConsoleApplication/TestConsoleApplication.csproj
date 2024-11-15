@@ -9,7 +9,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\BskyTimelineParser.csproj" />
+    <ProjectReference Include="..\..\BskyTimelineParser\BskyTimelineParser.csproj" />
   </ItemGroup>
 
 </Project>

@@ -6,26 +6,6 @@ using System.Threading.Tasks;
 
 namespace EbonCorvin.BskyTimelineParser.Models
 {
-    public class BskyToken
-    {
-        public string did { get; set; } 
-        public string accessJwt { get; set; } 
-        public string refreshJwt { get; set; }
-    }
-
-    public class BskyLoginParams
-    {
-        public string Identifier { get; set; }
-        public string Password { get; set; }
-        public string AuthFactorToken { get; set; } = "";
-    }
-
-    internal class BskyError
-    {
-        public string error { get; set; }
-        public string message { get; set; }
-    }
-
     /// <summary>
     /// Represent an error returned from the Bsky's API. <br/>
     /// Check <b>Message</b> for error code and <b>BskyDetailMessage</b> for the detail message returned by the API.
@@ -59,11 +39,5 @@ namespace EbonCorvin.BskyTimelineParser.Models
     {
         public string MediaType { get; set; }
         public string Url { get; set; }
-    }
-
-    public struct TestStructure
-    {
-        public string name { get; set; }
-        public string password { get; set; }
     }
 }
