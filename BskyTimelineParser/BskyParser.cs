@@ -134,6 +134,16 @@ namespace EbonCorvin.BskyTimelineParser
                                 Url = embedded.GetProperty("playlist").GetString()
                             }
                         };
+                    }else if(mediaType == "app.bsky.embed.external#view")
+                    {
+                        mediaList = new Media[]
+                        {
+                            new Media()
+                            {
+                                MediaType = "Link",
+                                Url = embedded.GetProperty("external").GetProperty("uri").GetString()
+                            }
+                        };
                     }
                 }
                 else

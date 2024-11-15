@@ -10,18 +10,15 @@ namespace EbonCorvin
     public class ConfigLoader
     {
         private string path = "";
-        private Dictionary<String, String> configDict = null;
+        private Dictionary<string, string> configDict = null;
 
         public string this[string key]
         {
             get
             {
-                String value = null;
-                bool hasValue = configDict.TryGetValue(key, out value);
-                if (!hasValue)
-                {
-                    Console.WriteLine("Warning: configuration key {0} doesn't exist in the file", key);
-                }
+                bool hasValue = configDict.TryGetValue(key, out var value);
+                // if (!hasValue)
+                    // throw new IndexOutOfRangeException(key);
                 return value;
             }
 
@@ -32,12 +29,17 @@ namespace EbonCorvin
                 foreach(var item in configDict)
                 {
                     sb.Append(item.Key);
-                    sb.Append("=");
+                    sb.Append('=');
                     sb.Append(item.Value);
                     sb.AppendLine();
                 }
                 File.WriteAllText(path, sb.ToString());
             }
+        }
+
+        public bool TryGet(string key, out string value)
+        {
+            return configDict.TryGetValue(key, out value);
         }
 
         // A really simple config loader, it read a plain text file line by line, than splits each line into key and value by "="

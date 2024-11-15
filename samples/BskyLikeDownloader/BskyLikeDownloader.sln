@@ -1,0 +1,28 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.12.35506.116 d17.12
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BskyLikeDownloader", "BskyLikeDownloader.csproj", "{6BAA371C-5DF1-4207-834D-1AFD94D92CFF}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BskyTimelineParser", "..\..\BskyTimelineParser\BskyTimelineParser.csproj", "{456A0274-B877-4C24-B6E1-3A1B7D9AF47E}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{6BAA371C-5DF1-4207-834D-1AFD94D92CFF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6BAA371C-5DF1-4207-834D-1AFD94D92CFF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6BAA371C-5DF1-4207-834D-1AFD94D92CFF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6BAA371C-5DF1-4207-834D-1AFD94D92CFF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{456A0274-B877-4C24-B6E1-3A1B7D9AF47E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{456A0274-B877-4C24-B6E1-3A1B7D9AF47E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{456A0274-B877-4C24-B6E1-3A1B7D9AF47E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{456A0274-B877-4C24-B6E1-3A1B7D9AF47E}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
