@@ -1,5 +1,5 @@
 ﻿// See https://aka.ms/new-console-template for more information
-using EbonCorvin;
+using EbonCorvin.Utils;
 using EbonCorvin.BskyTimelineParser;
 using EbonCorvin.BskyTimelineParser.BskyAPIModels;
 using EbonCorvin.BskyTimelineParser.Models;

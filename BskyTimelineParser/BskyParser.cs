@@ -18,8 +18,8 @@ namespace EbonCorvin.BskyTimelineParser
     {
         private static readonly string[] BSKY_API_ENDPOINT =
         {
-            "https://oyster.us-east.host.bsky.network/xrpc/app.bsky.feed.getActorLikes?actor={0}&limit=30",
-            "https://oyster.us-east.host.bsky.network/xrpc/app.bsky.feed.getTimeline",
+            "https://oyster.us-east.host.bsky.network/xrpc/app.bsky.feed.getActorLikes?actor={0}",
+            "https://oyster.us-east.host.bsky.network/xrpc/app.bsky.feed.getTimeline?a=0",
             "https://bsky.social/xrpc/app.bsky.feed.getFeed?feed={0}"
         };
         private const string BSKY_POST_URL = "https://bsky.app/profile/{0}/post/{1}";
@@ -33,7 +33,14 @@ namespace EbonCorvin.BskyTimelineParser
                 apiEndPoint = String.Format(BSKY_API_ENDPOINT[(int)timelineType], value);
             }
         }
-        private string NextCursor { get; set; }
+        /// <summary>
+        /// The size of a batch, default is 50 posts a batch
+        /// </summary>
+        public int Limit
+        {
+            get; set;
+        } = 50;
+        private string NextCursor { get; set; } = "";
         private HttpClient httpClient = null;
         /// <summary>
         /// Create a new Bsky post parser.
@@ -70,7 +77,7 @@ namespace EbonCorvin.BskyTimelineParser
         /// <returns></returns>
         public async Task<Post[]> Next()
         {
-            HttpResponseMessage response = await httpClient.GetAsync(apiEndPoint);
+            HttpResponseMessage response = await httpClient.GetAsync(apiEndPoint + "&limit=" + Limit + "&cursor=" + NextCursor);
             string json = await response.Content.ReadAsStringAsync();
             JsonDocument doc = JsonDocument.Parse(json);
             NextCursor = doc.RootElement.GetProperty("cursor").GetString();
