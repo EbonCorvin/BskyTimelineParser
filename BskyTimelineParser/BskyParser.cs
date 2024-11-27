@@ -14,6 +14,10 @@ namespace EbonCorvin.BskyTimelineParser
     {
         LikedPost, Following, Feed
     }
+    public enum MediaTypes
+    {
+        Image, VideoPlayList, Link
+    }
     public class BskyParser
     {
         private static readonly string[] BSKY_API_ENDPOINT =
@@ -71,6 +75,17 @@ namespace EbonCorvin.BskyTimelineParser
             httpClient = new HttpClient();
             httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token.accessJwt);
         }
+
+        /// <summary>
+        /// Reset the page cursor and fetch the first page of the feed. After the task is done, the next cursor is set to the second page
+        /// </summary>
+        /// <returns></returns>
+        public async Task<Post[]> FirstPage()
+        {
+            NextCursor = "";
+            return await Next();
+        }
+
         /// <summary>
         /// Start to fetch and parse the posts of the next page each time it's called.
         /// </summary>
@@ -126,7 +141,7 @@ namespace EbonCorvin.BskyTimelineParser
                         for (var j = 0; j < imgCount; j++)
                         {
                             var url = images[j].GetProperty("fullsize").GetString();
-                            mediaList[j] = new Media() { MediaType = "image", Url = url };
+                            mediaList[j] = new Media() { MediaType = MediaTypes.Image, Url = url };
                         }
                     }
                     else if(mediaType == "app.bsky.embed.video#view")
@@ -137,7 +152,7 @@ namespace EbonCorvin.BskyTimelineParser
                         {
                             new Media()
                             {
-                                MediaType = "videoPlayList",
+                                MediaType = MediaTypes.VideoPlayList,
                                 Url = embedded.GetProperty("playlist").GetString()
                             }
                         };
@@ -147,7 +162,7 @@ namespace EbonCorvin.BskyTimelineParser
                         {
                             new Media()
                             {
-                                MediaType = "Link",
+                                MediaType = MediaTypes.Link,
                                 Url = embedded.GetProperty("external").GetProperty("uri").GetString()
                             }
                         };

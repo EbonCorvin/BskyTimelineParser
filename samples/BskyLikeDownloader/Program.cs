@@ -108,6 +108,7 @@ if (token == null) return;
 BskyParser parser = new BskyParser(token, TimelineTypes.LikedPost);
 string savePath = config["savePath"];
 savePath = savePath ?? "";
+Directory.CreateDirectory(savePath);
 HttpClient client = new HttpClient();
 while (true)
 {
@@ -122,30 +123,30 @@ while (true)
             //Console.WriteLine(media.Url);
             string url = media.Url;
             string fileName = "";
-            if (media.MediaType == "videoPlayList")
+            if (media.MediaType == MediaTypes.VideoPlayList)
             {
                 int lastSlashIdx = 0;
                 lastSlashIdx = url.LastIndexOf("/");
                 int secondLastSlashIdx = url.LastIndexOf("/", lastSlashIdx - 1);
                 fileName = url.Substring(secondLastSlashIdx + 2, lastSlashIdx - secondLastSlashIdx - 2) + ".ts";
             }
-            else if (media.MediaType == "image")
+            else if (media.MediaType == MediaTypes.Image)
             {
                 int lastSlashIdx = url.LastIndexOf("/") + 1;
                 int lastAtIdx = url.LastIndexOf("@");
                 fileName = url.Substring(lastSlashIdx, lastAtIdx - lastSlashIdx) + "." + url.Substring(lastAtIdx + 1);
             }
             else continue;
-            if (File.Exists(savePath + "/" + fileName)) continue;
+            if (File.Exists(Path.Combine(savePath, fileName))) continue;
             Console.WriteLine(fileName);
             switch (media.MediaType)
             {
-                case "videoPlayList":
+                case MediaTypes.VideoPlayList:
                     await BskyVideoDownloader.StartDownloadVideo(url, fileName, savePath);
                     break;
-                case "image":
+                case MediaTypes.Image:
                     var response = await client.GetAsync(url);
-                    File.WriteAllBytes(savePath + "/" + fileName, await response.Content.ReadAsByteArrayAsync());
+                    File.WriteAllBytes(Path.Combine(savePath, fileName), await response.Content.ReadAsByteArrayAsync());
                     break;
             }
         }

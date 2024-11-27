@@ -37,7 +37,7 @@ namespace EbonCorvin.BskyTimelineParser.Models
 
     public class Media
     {
-        public string MediaType { get; set; }
+        public MediaTypes MediaType { get; set; }
         public string Url { get; set; }
     }
 }
